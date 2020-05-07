@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import Contacts from './Component/Contact/Contacts';
 import {Provider} from './Component/Context'
-
+import AddContact from './Component/Contact/AddConatct'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css'; 
 
@@ -16,6 +16,7 @@ class App extends Component {
       <Provider>
         <div className="App">
           <Navbar/> 
+          <AddContact/>
           <Contacts />
        </div>
       </Provider>
