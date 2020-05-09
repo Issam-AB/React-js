@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {Consomer} from '../Context'
+import TextInputGroup from '../helpers/TextInputGroup'
 
 class AddConatct extends Component {
     state = {
@@ -41,30 +42,27 @@ class AddConatct extends Component {
                             <div class="card-body">
                                 <h4 class="card-title">Add Contact</h4>
                                 <div class="card-text">
-                                <div className="form-group">
-                                    <label htmlFor="">Name</label>
-                                    <input type="text" className="form-control"
-                                    name="name"
-                                    defaultValue={name}
-                                    onChange={this.onChangeInput}
-                                    />
-                                    </div>
-                                <div className="form-group">
-                                    <label htmlFor="">Tele</label>
-                                    <input type="text" className="form-control"
-                                    name="tele"
-                                    defaultValue={tele}
-                                    onChange={this.onChangeInput}
-                                    />
-                                    </div>
-                                <div className="form-group">
-                                    <label htmlFor="">Email</label>
-                                    <input type="text" className="form-control"
-                                    name="email"
-                                    defaultValue={email}
-                                    onChange={this.onChangeInput}
-                                    />
-                                    </div>
+                                <TextInputGroup 
+                                label="Name" 
+                                type="text"
+                                name="name" 
+                                value={name} 
+                                onChange={this.onChangeInput}    
+                                />
+                                <TextInputGroup 
+                                label="Tele" 
+                                type="tele"
+                                name="tele" 
+                                value={tele} 
+                                onChange={this.onChangeInput}    
+                                />
+                               <TextInputGroup 
+                                label="Email" 
+                                type="email"
+                                name="email" 
+                                value={email} 
+                                onChange={this.onChangeInput}    
+                                />
                                 <button className="btn btn-success btn-block">Add New Conatct</button>
                                 </div>
                             </div>
