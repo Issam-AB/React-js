@@ -6,30 +6,48 @@ class AddConatct extends Component {
     state = {
         name :'',
         tele :'',
-        email:''
+        email:'',
+        errors:{}
     }
     onChangeInput = (e) => this.setState({[e.target.name ]: e.target.value})
     submit = (dispatch,size,e) =>{
         e.preventDefault();
+
+        const  {name,tele,email} = this.state;
+
+        if(name == ""){
+            this.setState({errors: {name:"the name is Requiered !"}})
+            return
+        }
+        if(tele == ""){
+            this.setState({errors: {tele:"the tele is Requiered !"}})
+            return
+        }
+        if(email == ""){
+            this.setState({errors: {email:"the email is Requiered !"}})
+            return
+        }
         dispatch({
             type : 'ADD_CONATCT' ,
-            payload :{
+           payload :{
                 id : size + 1,
-                name : this.state.name,
-                tele : this.state.tele,
-                email : this.state.email 
+                name,
+                tele,
+                email 
             }
         })
-        
         this.setState({
             name :'',
             tele :'',
-            email:''
+            email:'',
+            error : {}
         })
+        
+     this.props.history.push('/');   
       
     }
     render() {
-        const {name,tele,email} = this.state ;
+        const {name,tele,email,errors} = this.state ;
         return(
             <Consomer>
                 {value => {
@@ -48,20 +66,23 @@ class AddConatct extends Component {
                                 name="name" 
                                 value={name} 
                                 onChange={this.onChangeInput}    
+                                error={errors.name}
                                 />
                                 <TextInputGroup 
                                 label="Tele" 
                                 type="tele"
                                 name="tele" 
                                 value={tele} 
-                                onChange={this.onChangeInput}    
+                                onChange={this.onChangeInput}   
+                                error={errors.tele} 
                                 />
                                <TextInputGroup 
                                 label="Email" 
                                 type="email"
                                 name="email" 
                                 value={email} 
-                                onChange={this.onChangeInput}    
+                                onChange={this.onChangeInput} 
+                                error={errors.email}   
                                 />
                                 <button className="btn btn-success btn-block">Add New Conatct</button>
                                 </div>
