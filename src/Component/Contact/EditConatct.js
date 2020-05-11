@@ -10,7 +10,19 @@ class AddConatct extends Component {
         email:'',
         errors:{}
     }
+    
+    async componentDidMount(){
+        const id = this.props.match.params.id ;
+        const res = await axios.get(`https://jsonplaceholder.typicode.com/users/${id}`)
+        this.setState({
+            name: res.data.name,
+            phone: res.data.phone,
+            email:res.data.email
+        })
+    } 
+
     onChangeInput = (e) => this.setState({[e.target.name ]: e.target.value})
+
     submit = async (dispatch,size,e) =>{
         e.preventDefault();
 
@@ -28,15 +40,16 @@ class AddConatct extends Component {
             this.setState({errors: {email:"the email is Requiered !"}})
             return
         }
-        const newContact = {
+        const UpContact = {
             name,
             phone,
             email 
         }
+        const id = this.props.match.params.id ;
         try{
-            const res = await axios.post('https://jsonplaceholder.typicode.com/users',newContact)
+            const res = await axios.put(`https://jsonplaceholder.typicode.com/users/${id}`,UpContact)
             dispatch({
-                type : 'ADD_CONATCT' ,
+                type : 'UPDATE_CONATCT' ,
                payload : res.data
             })    
         }
@@ -52,11 +65,11 @@ class AddConatct extends Component {
             error : {}
         })
         
-     this.props.history.push('/');      
+     this.props.history.push('/');   
       
     }
     render() {
-const {name,tele,email,errors} = this.state ;
+const {name,phone,email,errors} = this.state ;
 return(
 <Consomer>
 {value => {
@@ -67,7 +80,7 @@ return (
         <h1>Add Conatct</h1>
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Add Contact</h4>
+                <h4 class="card-title">Edit Contact</h4>
                 <div class="card-text">
                 <TextInputGroup 
                 label="Name" 
@@ -81,7 +94,7 @@ return (
                 label="Tele" 
                 type="tele"
                 name="phone" 
-                value={tele} 
+                value={phone} 
                 onChange={this.onChangeInput}   
                 error={errors.tele} 
                 />
@@ -93,7 +106,7 @@ return (
                 onChange={this.onChangeInput} 
                 error={errors.email}   
                 />
-                <button className="btn btn-success btn-block">Add New Conatct</button>
+                <button className="btn btn-danger btn-block">Update Conatct</button>
                 </div>
             </div>
         </div>

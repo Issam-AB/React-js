@@ -4,6 +4,7 @@ import './Contact.css'
 import PropTypes from 'prop-types'
 import { Consomer } from '../Context';
 import axios from 'axios'
+import {Link} from 'react-router-dom'
 
 
 
@@ -18,13 +19,17 @@ class Contact extends Component {
             showContactTogle: !this.state.showContactTogle
         })
     }
-    onDeleteClick = (id, dispatch) => {
-        axios.delete('https://jsonplaceholder.typicode.com/users/' +id)
-        .then(res => dispatch({
-            type: 'DELETE_CONATCT',
-            payload: id
-        }))
-        .catch(err => console.error(err));
+    onDeleteClick = async (id, dispatch) => {
+     try{
+        await axios.delete('https://jsonplaceholder.typicode.com/users/' +id)
+      dispatch({
+        type: 'DELETE_CONATCT',
+        payload: id
+    })
+    }catch(ex){
+      alert(ex)
+    }
+     
 
     }
     render() {
@@ -39,9 +44,21 @@ class Contact extends Component {
                             <div className="card-body">
                                 <h4 className="card-title">
                                     {name}  <i onClick={this.showContact.bind(this, name)}
-                                        className="fa fa-sort-down " style={{ cursor: 'pointer' }}></i>
-                                    <i onClick={this.onDeleteClick.bind(this, id, dispatch)} style={{ color: 'red', float: "right", cursor: 'pointer' }}
-                                        className="fa fa-times" aria-hidden="true"></i>
+                                       className="fa fa-sort-down " 
+                                       style={{ cursor: 'pointer' }}>
+                                       </i>
+                                    <Link to={`/Contact/Edit/${id}`}>
+                                        <i className="fa fa-pencil" style={{
+                                            color:'orange',
+                                            float:'right',
+                                            cursor:'pointer',
+                                            marginLeft:'8px'                                     
+                                        }}>
+                                        </i>
+                                    </Link>
+                                    <i onClick={this.onDeleteClick.bind(this, id, dispatch)} 
+                                       style={{ color: 'red', float: "right", cursor: 'pointer' }}
+                                       className="fa fa-times" aria-hidden="true"></i>
                                 </h4>
                                 {(this.state.showContactTogle) ? (
                                     <ul className="list-group">
